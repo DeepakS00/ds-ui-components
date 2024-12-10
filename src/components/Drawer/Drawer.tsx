@@ -1,20 +1,9 @@
 import React from 'react';
-import {
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  Flex,
-  IconButton,
-  Stack,
-  Text,
-  useClipboard,
-} from '@chakra-ui/react';
+import { Flex, Stack, Text } from '@chakra-ui/react';
+import { DrawerRoot, DrawerBody, DrawerCloseTrigger, DrawerContent, DrawerHeader, DrawerBackdrop } from '../ui/drawer';
 import MainMenuItem from './MainMenuItem';
 import MenuDivider from './MenuDivider';
-import { LuCopy } from 'react-icons/lu';
+import { ClipboardIconButton, ClipboardRoot } from '../ui/clipboard';
 
 interface NavDrawerProps {
   menuList: Array<{
@@ -37,7 +26,6 @@ interface NavDrawerProps {
 }
 
 const AccountNumber: React.FC<{ hederaAccountId: string }> = ({ hederaAccountId, ...rest }) => {
-  const { hasCopied, onCopy } = useClipboard(hederaAccountId);
   return (
     <>
       <Flex
@@ -66,25 +54,12 @@ const AccountNumber: React.FC<{ hederaAccountId: string }> = ({ hederaAccountId,
         <Text as='span' fontSize='12px'>
           Hedera Account:
         </Text>
-        <Text
-          as='span'
-          textDecoration={'underline'}
-          color={hasCopied ? 'brand.600' : 'none'}
-          _dark={{ color: hasCopied ? 'brand.400' : 'none' }}
-        >
+        <Text as='span' textDecoration={'underline'} color={'brand.600'} _dark={{ color: 'brand.400' }}>
           {hederaAccountId}
         </Text>
-        <IconButton
-          onClick={onCopy}
-          h='auto'
-          w='auto'
-          border='none'
-          bg={'none'}
-          color={hasCopied ? 'brand.600' : 'none'}
-          _dark={{ color: hasCopied ? 'brand.400' : 'none', bg: 'none' }}
-          aria-label='test'
-          icon={<LuCopy />}
-        />
+        <ClipboardRoot value={hederaAccountId} timeout={1000}>
+          <ClipboardIconButton bg={'transparent'} />
+        </ClipboardRoot>
       </Flex>
       <MenuDivider />
     </>
@@ -97,22 +72,21 @@ export default function NavDrawer({
   isOpen,
   onClose,
   hederaAccountId,
-  btnRef,
   handleClose,
   styling,
 }: NavDrawerProps) {
   return (
-    <Drawer colorScheme='dark' isOpen={isOpen} onClose={onClose} finalFocusRef={btnRef} placement='right'>
-      <DrawerOverlay />
+    <DrawerRoot open={isOpen} onOpenChange={onClose} placement='end'>
+      <DrawerBackdrop />
       <DrawerContent {...styling}>
-        <DrawerHeader>{<HeaderLogo />}</DrawerHeader>
+        <DrawerHeader pt={'4'}>{<HeaderLogo />}</DrawerHeader>
         <DrawerBody p='2'>
-          <Stack direction='column' spacing={'1'}>
+          <Stack direction='column' gap={'1'}>
             {menuList.map((item, index) => (
               <React.Fragment key={index}>
                 <MainMenuItem handleClose={handleClose} {...item.menuItemProps}>
                   <Flex flexDirection={'column'}>
-                    <Text w='100%' fontSize='16px' marginBottom='0' fontWeight='600'>
+                    <Text w='100%' fontSize='16px' lineHeight={'1.5rem'} marginBottom='0' fontWeight='600'>
                       {item.title}
                     </Text>
                     <Text fontSize='12px' lineHeight='1.2rem' fontWeight={'400'}>
@@ -126,8 +100,13 @@ export default function NavDrawer({
             <AccountNumber hederaAccountId={hederaAccountId} />
           </Stack>
         </DrawerBody>
-        <DrawerCloseButton mt='safe-top' fontSize='lg' />
+        <DrawerCloseTrigger
+          asChild
+          bg={'transparent'}
+          _hover={{ bgColor: 'transparent', border: 'none', outline: 'none' }}
+          top={'3'}
+        />
       </DrawerContent>
-    </Drawer>
+    </DrawerRoot>
   );
 }

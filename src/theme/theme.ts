@@ -1,11 +1,26 @@
-import { extendTheme } from '@chakra-ui/react';
+import { defineConfig, createSystem, defaultConfig } from '@chakra-ui/react';
 
-import * as components from './components';
 import foundations from './foundations';
-import { styles } from './styles';
+import { globalStyles } from './styles';
 
-export const theme = extendTheme({
-  styles,
-  ...foundations,
-  components: { ...components },
+const config = defineConfig({
+  theme: {
+    tokens: {
+      fonts: {
+        heading: {
+          value: `Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
+        },
+        body: {
+          value: `Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
+        },
+        mono: { value: `SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace` },
+      },
+      colors: foundations.colors,
+    },
+  },
+  globalCss: { ...globalStyles },
 });
+
+console.log(config);
+
+export const system = createSystem(defaultConfig, config);

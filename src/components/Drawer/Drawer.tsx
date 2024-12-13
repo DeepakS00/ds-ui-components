@@ -1,8 +1,7 @@
 import React from 'react';
-import { Flex, Stack, Text } from '@chakra-ui/react';
+import { Flex, Separator, Stack, Text } from '@chakra-ui/react';
 import { DrawerRoot, DrawerBody, DrawerCloseTrigger, DrawerContent, DrawerHeader, DrawerBackdrop } from '../ui/drawer';
 import MainMenuItem from './MainMenuItem';
-import MenuDivider from './MenuDivider';
 import { ClipboardIconButton, ClipboardRoot } from '../ui/clipboard';
 
 interface NavDrawerProps {
@@ -61,7 +60,14 @@ const AccountNumber: React.FC<{ hederaAccountId: string }> = ({ hederaAccountId,
           <ClipboardIconButton bg={'transparent'} />
         </ClipboardRoot>
       </Flex>
-      <MenuDivider />
+      <Separator
+        border={0}
+        borderBottom='1px solid'
+        borderColor='inherit'
+        marginTop='var(--chakra-space-1)'
+        marginBottom='var(--chakra-space-1)'
+        opacity='0.6'
+      />
     </>
   );
 };
@@ -94,7 +100,14 @@ export default function NavDrawer({
                     </Text>
                   </Flex>
                 </MainMenuItem>
-                <MenuDivider />
+                <Separator
+                  border={0}
+                  borderBottom='1px solid'
+                  borderColor='inherit'
+                  marginTop='var(--chakra-space-1)'
+                  marginBottom='var(--chakra-space-1)'
+                  opacity='0.6'
+                />
               </React.Fragment>
             ))}
             <AccountNumber hederaAccountId={hederaAccountId} />

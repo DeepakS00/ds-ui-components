@@ -4,7 +4,7 @@ import { chakra } from '@chakra-ui/react';
 
 const IconHamburger = ({ ...rest }: ComponentProps<typeof chakra.svg>) => {
   return (
-    <chakra.svg width="29" height="29" viewBox="0 0 29 29" {...rest}>
+    <chakra.svg width="29px" height="29px" viewBox="0 0 29 29" {...rest}>
       <rect
         y="14.1421"
         width="4"

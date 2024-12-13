@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -13,7 +14,6 @@ import {
   useClipboard,
 } from '@chakra-ui/react';
 import MainMenuItem from './MainMenuItem';
-import MenuDivider from './MenuDivider';
 import { LuCopy } from 'react-icons/lu';
 
 interface NavDrawerProps {
@@ -86,7 +86,14 @@ const AccountNumber: React.FC<{ hederaAccountId: string }> = ({ hederaAccountId,
           icon={<LuCopy />}
         />
       </Flex>
-      <MenuDivider />
+      <Divider
+        border={0}
+        borderBottom='1px solid'
+        borderColor='inherit'
+        marginTop='var(--chakra-space-1)'
+        marginBottom='var(--chakra-space-1)'
+        opacity='0.6'
+      />
     </>
   );
 };
@@ -120,7 +127,14 @@ export default function NavDrawer({
                     </Text>
                   </Flex>
                 </MainMenuItem>
-                <MenuDivider />
+                <Divider
+                  border={0}
+                  borderBottom='1px solid'
+                  borderColor='inherit'
+                  marginTop='var(--chakra-space-1)'
+                  marginBottom='var(--chakra-space-1)'
+                  opacity='0.6'
+                />
               </React.Fragment>
             ))}
             <AccountNumber hederaAccountId={hederaAccountId} />

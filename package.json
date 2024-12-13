@@ -1,7 +1,7 @@
 {
   "name": "ds-ui-package",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "module",
   "main": "./src/main.tsx",
   "description": "A React and Chakra UI-based component library",
@@ -10,7 +10,6 @@
     "react",
     "component-library"
   ],
-  
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -51,8 +50,8 @@
     "vite": "^6.0.1"
   },
   "peerDependencies": {
+    "@chakra-ui/react": "2.7.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "@chakra-ui/react": "2.7.0"
+    "react-dom": "^18.3.1"
   }
 }

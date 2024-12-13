@@ -1,5 +1,5 @@
 {
-  "name": "ds-ui-components",
+  "name": "ds-ui-package",
   "private": false,
   "version": "1.0.0",
   "type": "module",
@@ -10,6 +10,7 @@
     "react",
     "component-library"
   ],
+  
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

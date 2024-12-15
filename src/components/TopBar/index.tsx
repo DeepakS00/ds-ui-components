@@ -1,16 +1,19 @@
 import React, { useRef, useState } from 'react';
 
-import { Box, Button, Flex, IconButton, IconButtonProps } from '@chakra-ui/react';
-import { MdArrowBack } from 'react-icons/md';
-import { Link, useLocation } from 'react-router-dom';
+import { Box, Flex, IconButton, IconButtonProps } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
-import { Icon } from '../../components/Icons';
 import { CaratLogo } from '../../assets/Logo/CaratLogo';
 import IconHamburger from '../../assets/Logo/IconHamburger';
 import NavDrawer from '../Drawer/Drawer';
-import { CloseButton } from '../ui/close-button';
+// import { CloseButton, CloseButtonProps } from '../ui/close-button';
+import { Provider } from '../ui/provider';
 
-const MenuButton = React.forwardRef((props: Partial<IconButtonProps>, ref) => {
+// type ButtonLinkProps = CloseButtonProps & LinkProps;
+
+// const CustomCloseButton: React.FC<ButtonLinkProps> = (props) => <CloseButton {...props}></CloseButton>;
+
+const MenuButton = React.forwardRef((props: Partial<IconButtonProps>, ref: React.Ref<HTMLButtonElement>) => {
   return (
     <IconButton
       aria-label='Navigation'
@@ -19,6 +22,7 @@ const MenuButton = React.forwardRef((props: Partial<IconButtonProps>, ref) => {
       _hover={{ bg: 'gray.200' }}
       _dark={{ _hover: { bg: 'whiteAlpha.200' } }}
       {...props}
+      ref={ref}
     >
       <IconHamburger fontSize='2xl' stroke='black' />
     </IconButton>
@@ -51,14 +55,6 @@ const menuList = [
     },
   },
   {
-    title: 'Escrow',
-    description: 'View and create an escrow account',
-    menuItemProps: {
-      to: '/escrow',
-      as: Link,
-    },
-  },
-  {
     title: 'Security',
     description: 'Backup or restore wallet, security PIN',
     menuItemProps: {
@@ -75,16 +71,15 @@ const menuList = [
   },
 ];
 
-export default function TopBar() {
+function TopBar() {
   // const theme = useTheme();
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
 
   const headerLogo = () => <CaratLogo fontSize='150px' fill='brand.600' _dark={{ fill: 'white' }} />;
   const btnRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const showTopNav = !pathname || ['/', '/dashboard'].includes(pathname);
-  const showBackIcon = pathname && ['/transactions', '/escrow', '/settings', '/security', '/bitcarbon'].includes(pathname);
+  // const showTopNav = !pathname || ['/', '/dashboard'].includes(pathname);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -96,7 +91,6 @@ export default function TopBar() {
         top='0'
         insetStart='0'
         insetEnd='0'
-        // color="gray.50"
         maxW='80ch'
         m='auto'
         align='center'
@@ -106,41 +100,26 @@ export default function TopBar() {
         bg='gray.50'
         color='gray.800'
         justifyContent={'space-between'}
-        // boxShadow={offset > 35 ? 'layout' : 'none'}
         _dark={{
           bg: 'gray.800',
           color: 'gray.50',
-          // boxShadow: offset > 35 ? 'layout' : 'none',
         }}
       >
-        <Box as={Link} to='/'>
+        <Link to='/'>
           <CaratLogo fontSize='150px' fill='brand.600' _dark={{ fill: 'white' }} />
-        </Box>
-        {showTopNav ? (
-          <MenuButton
-            ref={btnRef}
-            display={{ base: 'flex' }}
-            mr='-0.5rem'
-            borderRadius='full'
-            _focusVisible={{ shadow: 'outline' }}
-            onClick={handleOpen}
-          />
-        ) : showBackIcon ? (
-          <Button
-            as={Link}
-            to='/'
-            fontSize='lg'
-            pr='0'
-            aria-label={'back button'}
-            leftIcon={<MdArrowBack fontSize='xl' height='100px' />}
-            background={'bottom'}
-            border='none'
-          >
-            Back
-          </Button>
-        ) : (
-          <CloseButton size={'xl'} as={Link} to='/' />
-        )}
+        </Link>
+        {/* {showTopNav ? ( */}
+        <MenuButton
+          ref={btnRef}
+          display={{ base: 'flex' }}
+          mr='-0.5rem'
+          borderRadius='full'
+          _focusVisible={{ shadow: 'outline' }}
+          onClick={handleOpen}
+        />
+        {/* ) : (
+          <CustomCloseButton size={'xl'} as={Link} to='/' />
+        )} */}
       </Flex>
 
       <Box />
@@ -154,5 +133,13 @@ export default function TopBar() {
         hederaAccountId='0.0.5101947'
       />
     </>
+  );
+}
+
+export default function TopBarComponent() {
+  return (
+    <Provider>
+      <TopBar />
+    </Provider>
   );
 }

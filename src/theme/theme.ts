@@ -21,6 +21,4 @@ const config = defineConfig({
   globalCss: { ...globalStyles },
 });
 
-console.log(config);
-
 export const system = createSystem(defaultConfig, config);

@@ -4,7 +4,7 @@ import { DrawerRoot, DrawerBody, DrawerCloseTrigger, DrawerContent, DrawerHeader
 import MainMenuItem from './MainMenuItem';
 import { ClipboardIconButton, ClipboardRoot } from '../ui/clipboard';
 
-interface NavDrawerProps {
+export interface NavDrawerProps {
   menuList: Array<{
     menuItemProps: {
       to?: string;

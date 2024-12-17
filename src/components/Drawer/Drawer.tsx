@@ -16,7 +16,7 @@ import {
 import MainMenuItem from './MainMenuItem';
 import { LuCopy } from 'react-icons/lu';
 
-interface NavDrawerProps {
+export interface NavDrawerProps {
   menuList: Array<{
     menuItemProps: {
       to?: string;

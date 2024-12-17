@@ -1,9 +1,10 @@
 {
   "name": "ds-ui-package",
   "private": false,
-  "version": "1.0.2",
+  "version": "1.0.0",
   "type": "module",
-  "main": "./src/main.tsx",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "description": "A React and Chakra UI-based component library",
   "keywords": [
     "chakra-ui",
@@ -15,7 +16,8 @@
     "build": "tsc -b && vite build",
     "build-babel": "babel src --out-dir dist --copy-files --presets=@babel/preset-env,@babel/preset-react",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "bundle": "tsup src/index.ts --tsconfig tsconfig.app.json"
   },
   "dependencies": {
     "@chakra-ui/react": "2.7.0",
@@ -45,6 +47,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.12.0",
+    "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.16.0",
     "vite": "^6.0.1"
@@ -53,5 +56,7 @@
     "@chakra-ui/react": "2.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
-  }
+  },
+  "author": "Deepak",
+  "license": "MIT"
 }

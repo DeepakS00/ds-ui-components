@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import { Box, Button, CloseButton, Flex, IconButton, IconButtonProps, SlideFade } from '@chakra-ui/react';
+import { Box, Button, ChakraProvider, CloseButton, Flex, IconButton, IconButtonProps, SlideFade } from '@chakra-ui/react';
 import { MdArrowBack } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import { Icon } from '../../components/Icons';
 import { CaratLogo } from '../../assets/Logo/CaratLogo';
 import IconHamburger from '../../assets/Logo/IconHamburger';
 import NavDrawer from '../Drawer/Drawer';
+import theme from '../../theme';
 
 const MenuButton = React.forwardRef((props: Partial<IconButtonProps>, ref) => {
   return (
@@ -74,7 +75,7 @@ const menuList = [
   },
 ];
 
-export default function TopBar() {
+function TopBar() {
   // const theme = useTheme();
   const { pathname } = useLocation();
 
@@ -96,7 +97,6 @@ export default function TopBar() {
           top='0'
           insetStart='0'
           insetEnd='0'
-          // color="gray.50"
           maxW='80ch'
           m='auto'
           align='center'
@@ -106,11 +106,9 @@ export default function TopBar() {
           bg='gray.50'
           color='gray.800'
           justifyContent={'space-between'}
-          // boxShadow={offset > 35 ? 'layout' : 'none'}
           _dark={{
             bg: 'gray.800',
             color: 'gray.50',
-            // boxShadow: offset > 35 ? 'layout' : 'none',
           }}
         >
           <Box as={Link} to='/'>
@@ -154,5 +152,13 @@ export default function TopBar() {
         hederaAccountId='0.0.5101947'
       />
     </>
+  );
+}
+
+export default function TopBarComponent() {
+  return (
+    <ChakraProvider theme={{ ...theme }}>
+      <TopBar />
+    </ChakraProvider>
   );
 }

@@ -6,12 +6,27 @@ import { Link } from 'react-router-dom';
 import { CaratLogo } from '../../assets/Logo/CaratLogo';
 import IconHamburger from '../../assets/Logo/IconHamburger';
 import NavDrawer from '../Drawer/Drawer';
-// import { CloseButton, CloseButtonProps } from '../ui/close-button';
 import { Provider } from '../ui/provider';
 
-// type ButtonLinkProps = CloseButtonProps & LinkProps;
-
-// const CustomCloseButton: React.FC<ButtonLinkProps> = (props) => <CloseButton {...props}></CloseButton>;
+export interface NavBarProps {
+  menuList?: Array<{
+    menuItemProps: {
+      to?: string;
+      as?: React.ElementType;
+      onClick?: () => void;
+    };
+    title: string;
+    description?: string;
+  }>;
+  HeaderLogo?: React.ElementType;
+  isOpen?: boolean;
+  onClose?: () => void;
+  handleClose?: () => void;
+  hederaAccountId?: string;
+  btnRef?: React.RefObject<any>;
+  styling?: object;
+  [key: string]: any;
+}
 
 const MenuButton = React.forwardRef((props: Partial<IconButtonProps>, ref: React.Ref<HTMLButtonElement>) => {
   return (
@@ -71,15 +86,11 @@ const menuList = [
   },
 ];
 
-function TopBar() {
-  // const theme = useTheme();
-  // const { pathname } = useLocation();
-
+function TopBar(props: NavBarProps) {
   const headerLogo = () => <CaratLogo fontSize='150px' fill='brand.600' _dark={{ fill: 'white' }} />;
   const btnRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-
-  // const showTopNav = !pathname || ['/', '/dashboard'].includes(pathname);
+  const menuOptions = [...menuList, ...(props?.menuList || [])];
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -108,7 +119,6 @@ function TopBar() {
         <Link to='/'>
           <CaratLogo fontSize='150px' fill='brand.600' _dark={{ fill: 'white' }} />
         </Link>
-        {/* {showTopNav ? ( */}
         <MenuButton
           ref={btnRef}
           display={{ base: 'flex' }}
@@ -117,14 +127,11 @@ function TopBar() {
           _focusVisible={{ shadow: 'outline' }}
           onClick={handleOpen}
         />
-        {/* ) : (
-          <CustomCloseButton size={'xl'} as={Link} to='/' />
-        )} */}
       </Flex>
 
       <Box />
       <NavDrawer
-        menuList={menuList}
+        menuList={menuOptions}
         HeaderLogo={headerLogo}
         btnRef={btnRef}
         isOpen={isOpen}
@@ -136,10 +143,10 @@ function TopBar() {
   );
 }
 
-export default function TopBarComponent() {
+export default function TopBarComponent(props: NavBarProps) {
   return (
     <Provider>
-      <TopBar />
+      <TopBar {...props} />
     </Provider>
   );
 }

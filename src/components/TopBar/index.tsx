@@ -18,7 +18,7 @@ export interface NavBarProps {
     title: string;
     description?: string;
   }>;
-  HeaderLogo?: React.ElementType;
+  HeaderLogo?: any;
   isOpen?: boolean;
   onClose?: () => void;
   handleClose?: () => void;
@@ -44,7 +44,7 @@ const MenuButton = React.forwardRef((props: Partial<IconButtonProps>, ref: React
   );
 });
 
-const menuList = [
+const menuListConfig = [
   {
     title: 'Profile',
     description: 'Update name, email or default location, delete account',
@@ -86,14 +86,19 @@ const menuList = [
   },
 ];
 
-function TopBar(props: NavBarProps) {
-  const headerLogo = () => <CaratLogo fontSize='150px' fill='brand.600' _dark={{ fill: 'white' }} />;
+function TopBar({ menuList, HeaderLogo, onClose, hederaAccountId }: NavBarProps) {
+  const NavBarHeaderLogo = HeaderLogo
+    ? HeaderLogo
+    : () => <CaratLogo fontSize='150px' fill='brand.600' _dark={{ fill: 'white' }} />;
   const btnRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const menuOptions = [...menuList, ...(props?.menuList || [])];
+  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const menuOptions = menuList ? [...menuListConfig, ...menuList] : menuListConfig;
 
-  const handleOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
+  const handleOpenDrawer = () => setDrawerIsOpen(true);
+  const handleCloseDrawer = () => {
+    setDrawerIsOpen(false);
+    if (onClose) onClose();
+  };
 
   return (
     <>
@@ -117,7 +122,7 @@ function TopBar(props: NavBarProps) {
         }}
       >
         <Link to='/'>
-          <CaratLogo fontSize='150px' fill='brand.600' _dark={{ fill: 'white' }} />
+          <NavBarHeaderLogo />
         </Link>
         <MenuButton
           ref={btnRef}
@@ -125,19 +130,19 @@ function TopBar(props: NavBarProps) {
           mr='-0.5rem'
           borderRadius='full'
           _focusVisible={{ shadow: 'outline' }}
-          onClick={handleOpen}
+          onClick={handleOpenDrawer}
         />
       </Flex>
 
       <Box />
       <NavDrawer
         menuList={menuOptions}
-        HeaderLogo={headerLogo}
+        HeaderLogo={NavBarHeaderLogo}
         btnRef={btnRef}
-        isOpen={isOpen}
-        handleClose={handleClose}
-        onClose={handleClose}
-        hederaAccountId='0.0.5101947'
+        isOpen={drawerIsOpen}
+        handleClose={handleCloseDrawer}
+        onClose={handleCloseDrawer}
+        hederaAccountId={hederaAccountId ? hederaAccountId : '0.0.5101947'}
       />
     </>
   );
